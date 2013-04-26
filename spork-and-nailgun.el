@@ -44,14 +44,19 @@
   (sang-kill-nailgun)
   (sang-kill-spork))
 
+(defun sang-exec (command buffer)
+ (cd (ffip-project-root))
+ (when (require 'rvm nil t)
+   (rvm-activate-corresponding-ruby))
+ (async-shell-command command buffer))
+
 (defun sang-start-spork ()
   (interactive)
-  (async-shell-command (concat "spork --p " sang-spork-port) "*spork*"))
+  (sang-exec (concat "spork --p " sang-spork-port) "*spork*"))
 
 (defun sang-start-nailgun ()
   (interactive)
-  (async-shell-command
-   (concat "jruby --ng-server " sang-nailgun-port) "*nailgun*"))
+  (sang-exec (concat "jruby --ng-server " sang-nailgun-port) "*nailgun*"))
 
 (defun sang-start-all ()
   (interactive)
@@ -60,8 +65,6 @@
     (sit-for 10)
     (when (get-buffer "*spork*")   (kill-buffer "*spork*"))
     (when (get-buffer "*nailgun*") (kill-buffer "*nailgun*"))
-
-    (cd (ffip-project-root))
     (sang-start-nailgun)
     (sang-start-spork)))
 
