@@ -65,4 +65,4 @@
     (sang-start-nailgun)
     (sang-start-spork)))
 
-(provide 'sang)
+(provide 'spork-and-nailgun)
