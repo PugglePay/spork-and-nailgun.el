@@ -24,7 +24,7 @@
 (defcustom sang-spork-port   "8989" "Port to use for spork")
 
 (defun sang-pid-for (port)
-  (let (pid (sang-trim-string (shell-command-to-string (concat "lsof -t -i :" port))))
+  (let ((pid (sang-trim-string (shell-command-to-string (concat "lsof -t -i :" port)))))
     (if (string= pid "") nil pid)))
 
 (defun sang-kill-pid (pid)
