@@ -25,11 +25,11 @@
 
 (defun sang-pid-for (port)
   (let ((pid (sang-trim-string (shell-command-to-string (concat "lsof -t -i :" port)))))
-    (if (string= pid "") nil pid)))
+    (unless (string= pid "") pid))
 
-(defun sang-kill-pid (pid)
-  (when pid
-      (shell-command (concat "kill -9 " pid))))
+  (defun sang-kill-pid (pid)
+    (when pid
+      (shell-command (concat "kill -9 " pid)))))
 
 (defun sang-kill-nailgun ()
   (interactive)
@@ -61,6 +61,7 @@
 (defun sang-start-all ()
   (interactive)
   (save-excursion
+    (message "starting spork and nailgun")
     (sang-kill-all)
     (sit-for 10)
     (when (get-buffer "*spork*")   (kill-buffer "*spork*"))
