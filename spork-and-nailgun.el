@@ -25,11 +25,11 @@
 
 (defun sang-pid-for (port)
   (let ((pid (sang-trim-string (shell-command-to-string (concat "lsof -t -i :" port)))))
-    (unless (string= pid "") pid))
+    (unless (string= pid "") pid)))
 
-  (defun sang-kill-pid (pid)
-    (when pid
-      (shell-command (concat "kill -9 " pid)))))
+(defun sang-kill-pid (pid)
+  (when pid
+    (shell-command (concat "kill -9 " pid))))
 
 (defun sang-kill-nailgun ()
   (interactive)
